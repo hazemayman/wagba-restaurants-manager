@@ -1,0 +1,65 @@
+.order-container{
+    /* border: 1px solid red; */
+    display: flex;
+    flex-direction: row;
+    margin: 2rem 0;
+}
+.order-data{
+    display: flex;
+    flex-direction: column;
+    margin-left: 5rem;
+
+    /* border: 1px solid red; */
+}
+.order-data p{
+    /* border: 1px solid red; */
+    margin: 0;
+}
+
+.order-food{
+    /* border: 1px solid red; */
+    height: 5rem;
+    overflow: scroll;
+    width: fit-content;
+    overflow-x: hidden;
+    padding-right: 0.3rem
+}
+.food-item{
+    display: flex;
+    width: 400px;
+    justify-content: space-between;
+    margin-left: 20rem;
+}
+.order-data-inner{
+    align-self: flex-end;
+    /* border: 1px solid yellow; */
+    display: flex;
+    gap: 2rem;
+}
+.food-item p{
+    margin: 0;
+}
+.dropdown-status{
+    /* border: 1px solid red; */
+    margin-left: auto;
+}
+
+
+.order-food::-webkit-scrollbar {
+    width: 5px;
+    margin-left: 50px;
+    
+  }
+  /* Track */
+.order-food::-webkit-scrollbar-track {
+/* box-shadow: inset 0px 2px 5px 1px rgba(156, 53, 170, 1); */
+    border-radius: 50px;
+    z-index: 1;
+}
+
+.order-food::-webkit-scrollbar-thumb {
+    background: rgba(156, 53, 170, 0.582);
+    border-radius: 5px;
+    visibility: visible;
+    transition: background 1s linear;
+}
