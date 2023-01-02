@@ -2,10 +2,10 @@ import logo from './logo.svg';
 import './App.css';
 import Order from './components/Order'
 import { initializeApp } from "firebase/app";
-import { getDatabase, ref, onValue, set} from "firebase/database";
+import { getDatabase, ref, onValue, set, Database} from "firebase/database";
 import React  , {useState , useEffect} from 'react'
 import { Dropdown } from 'reactjs-dropdown-component';
-// Your web app's Firebase configuration
+// import Alert from '@mui/joy/Alert'; 
 const firebaseConfig = {
   apiKey: "AIzaSyBnmGmDeACPvqLPKroWLCtjuKqAYiHfiuE",
   authDomain: "wagba-17f4c.firebaseapp.com",
@@ -32,7 +32,7 @@ function App() {
   const [orders , setOrders] = useState({})
 
 
-  const updateDatabaseUser = (ID , Date , DeliveryFee , DeliveryLocation , DeliveryTime,
+  const updateDatabaseUser = (ID , date , DeliveryFee , DeliveryLocation , DeliveryTime,
     Food , Status ,Total ,User , rest ) =>{
     set(ref(database, '/ActiveOrders/' + User.split('@')[0] + '/' + ID ),{
       DeliveryLocation ,
@@ -42,7 +42,7 @@ function App() {
       Total ,
       User,
       DeliveryFee,
-      Date,
+      Date : date,
       restaurant})
     .then(() => {
       // Data saved successfully!
@@ -54,8 +54,29 @@ function App() {
     });
   }
 
-  const updateDatabase =  (ID , Date , DeliveryFee , DeliveryLocation , DeliveryTime,
+  const updateDatabase =  (ID , date , DeliveryFee , DeliveryLocation , DeliveryTime,
     Food , Status ,Total ,User , rest) =>{
+      console.log(date)
+    let orderDate = new Date(date);
+    console.log(orderDate)
+    let currentDate = new Date();
+    console.log(currentDate)
+    if(currentDate.getDate() != orderDate.getDate()){
+      alert("the order due date exceded but continue for testing purposes")
+    }else{
+      if(DeliveryTime.split(":")[0] == 12){
+        orderDate.setHours(10)
+        orderDate.setMinutes(30)
+      }else if(DeliveryTime.split(":")[0] == 3){
+        orderDate.setHours(1)
+        orderDate.setMinutes(30)
+      }
+      console.log(orderDate)
+      console.log(currentDate)
+      if(currentDate > orderDate){
+        alert("the order due date exceded but continue for testing purposes")
+      }
+    }
     set(ref(database, '/RestaurantOrders/' + restaurant + '/' + ID),  {
       DeliveryLocation ,
       DeliveryTime ,
@@ -64,11 +85,11 @@ function App() {
       Total ,
       User,
       DeliveryFee,
-      Date,
+      Date : date,
       restaurant})
     .then(() => {
       // Data saved successfully!
-      updateDatabaseUser(ID , Date , DeliveryFee , DeliveryLocation , DeliveryTime,
+      updateDatabaseUser(ID , date , DeliveryFee , DeliveryLocation , DeliveryTime,
         Food , Status ,Total ,User , rest );
     })
     .catch((error) => {
@@ -132,7 +153,9 @@ function App() {
     )
   }
   return (
+    
     <div className='main-container'>
+      {/* <Alert variant="solid">This is an Alert using the solid variant.</Alert> */}
       <div className='navbar-container'>
       <Dropdown
         name="Restaurant"
